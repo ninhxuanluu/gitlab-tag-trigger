@@ -10,7 +10,7 @@ node --version >=v4.8.7
 ### Installing
 
 ```
-npm install gitlab-tag-trigger
+npm install -g gitlab-tag-trigger
 ```
 
 ## Usage
