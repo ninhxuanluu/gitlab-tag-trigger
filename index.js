@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const request = require('request-promise');
 const minimist = require('minimist');
+const gitlabTagTrigger = require('./package.json');
 
 /**
  * Create new issue on gitlab
@@ -172,7 +173,7 @@ const createNewCommitPackageJson = (projectId, token, data) => {
 const parseArgs = (args) => {
   const opts = minimist(args);
   if (!opts.l || !opts.v || !opts.p || !opts.t || !opts.m) {
-    console.error('Gitlab Tag Trigger v1.0.0\nCommand error, use with args:  \n-l [name of library] \n-v [name of tag to update] \n-p [list of project id will be update , separate by comma] \n-t [token from gitlab] \n-m [true or false - is auto merge into master]\nExample: gitlab-tag-trigger -l lib-test-ci -v v1.3.3 -p 5265594,5297794 -t JJWpgybNt3LFKyGqy9tT -m true\n');
+    console.error(`Gitlab Tag Trigger v${gitlabTagTrigger.version}\nCommand error, use with args:  \n-l [name of library] \n-v [name of tag to update] \n-p [list of project id will be update , separate by comma] \n-t [token from gitlab] \n-m [true or false - is auto merge into master]\nExample: gitlab-tag-trigger -l lib-test-ci -v v1.3.3 -p 5265594,5297794 -t JJWpgybNt3LFKyGqy9tT -m true\n`);
     process.exit(1);
   }
   return opts;
