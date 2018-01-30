@@ -1,0 +1,51 @@
+{
+  "name": "gitlab-tag-trigger",
+  "description": "You have a bunch of node modules that all depend upon a library you’ve created (also packaged as a node module) ? Would you like to do is kick off a rebuild of all of your modules if the library that they depend upon changes. Gitlab-tag-trigger makes it easy and automation.",
+  "keywords": [
+    "gitlab",
+    "tag",
+    "trigger",
+    "auto update",
+    "library",
+    "dependencies"
+  ],
+  "version": "1.0.0",
+  "author": {
+    "name": "Luu Ninh",
+    "email": "ninhxuanluu@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ninhxuanluu/gitlab-tag-trigger.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ninhxuanluu/gitlab-tag-trigger/issues"
+  },
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">= 4"
+  },
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "minimist": "^1.2.0",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "homepage": "https://github.com/ninhxuanluu/gitlab-tag-trigger#readme",
+  "_npmUser": {
+    "name": "Luu Ninh",
+    "email": "ninhxuanluu@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "Luu Ninh",
+      "email": "ninhxuanluu@gmail.com"
+    }
+  ]
+}
