@@ -37,6 +37,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": "./index.js",
   "homepage": "https://github.com/ninhxuanluu/gitlab-tag-trigger#readme",
   "_npmUser": {
     "name": "Luu Ninh",
