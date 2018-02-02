@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const request = require('request-promise');
+const axios = require('axios');
 const minimist = require('minimist');
 const gitlabTagTrigger = require('./package.json');
 
@@ -26,16 +26,16 @@ const createNewIssue = (projectId, token, data) => {
   };
   const requestData = Object.assign(defaultRequest, data);
   const url = `https://gitlab.com/api/v4/projects/${projectId}/issues`;
-  return request.post({
+  return axios({
     method: 'POST',
-    uri: url,
+    url,
     headers: {
       'Content-Type': 'application/json',
       'PRIVATE-TOKEN': token
     },
-    body: requestData,
-    json: true
-  });
+    data: requestData,
+    responseType: 'json'
+  }).then(rs => rs.data);
 };
 /**
  * Create new branch on gitlab from ref
@@ -46,16 +46,16 @@ const createNewIssue = (projectId, token, data) => {
  */
 const createNewBranch = (projectId, token, data) => {
   const url = `https://gitlab.com/api/v4/projects/${projectId}/repository/branches`;
-  return request.post({
+  return axios({
     method: 'POST',
-    uri: url,
+    url,
     headers: {
       'Content-Type': 'application/json',
       'PRIVATE-TOKEN': token
     },
-    body: data,
-    json: true
-  });
+    data,
+    responseType: 'json'
+  }).then(rs => rs.data);
 };
 /**
  * Create new merge request from commit, branch, ref
@@ -66,16 +66,16 @@ const createNewBranch = (projectId, token, data) => {
  */
 const createNewMergeRequest = (projectId, token, data) => {
   const url = `https://gitlab.com/api/v4/projects/${projectId}/merge_requests`;
-  return request.post({
+  return axios({
     method: 'POST',
-    uri: url,
+    url,
     headers: {
       'Content-Type': 'application/json',
       'PRIVATE-TOKEN': token
     },
-    body: data,
-    json: true
-  });
+    data,
+    responseType: 'json'
+  }).then(rs => rs.data);
 };
 /**
  * Accept merge request and merge into master
@@ -87,16 +87,16 @@ const createNewMergeRequest = (projectId, token, data) => {
  */
 const accpetMergeRequest = (projectId, token, mergeRequestIID, sha) => {
   const url = `https://gitlab.com/api/v4/projects/${projectId}/merge_requests/${mergeRequestIID}/merge`;
-  return request.put({
+  return axios({
     method: 'PUT',
-    uri: url,
+    url,
     headers: {
       'Content-Type': 'application/json',
       'PRIVATE-TOKEN': token
     },
-    body: { sha },
-    json: true
-  });
+    data: { sha },
+    responseType: 'json'
+  }).then(rs => rs.data);
 };
 /**
  * Accept merge request and merge into master
@@ -107,15 +107,15 @@ const accpetMergeRequest = (projectId, token, mergeRequestIID, sha) => {
  */
 const closeIssue = (projectId, token, issueIID) => {
   const url = `https://gitlab.com/api/v4/projects/${projectId}/issues/${issueIID}?state_event=close`;
-  return request.put({
+  return axios({
     method: 'PUT',
-    uri: url,
+    url,
     headers: {
       'Content-Type': 'application/json',
       'PRIVATE-TOKEN': token
     },
-    json: true
-  });
+    responseType: 'json'
+  }).then(rs => rs.data);
 };
 /**
  * Get raw content of file from filename
@@ -127,15 +127,15 @@ const closeIssue = (projectId, token, issueIID) => {
 const getRawFile = (projectId, token, data) => {
   const url =
     `https://gitlab.com/api/v4/projects/${projectId}/repository/files/${data.filename}/raw?ref=${data.ref}`;
-  return request.get({
+  return axios({
     method: 'GET',
-    uri: url,
+    url,
     headers: {
       'Content-Type': 'application/json',
       'PRIVATE-TOKEN': token
     },
-    json: true
-  });
+    responseType: 'json'
+  }).then(rs => rs.data);
 };
 /**
  * Create commit of change files
@@ -153,16 +153,16 @@ const createNewCommitPackageJson = (projectId, token, data) => {
     actions: data.actions
   };
   const url = `https://gitlab.com/api/v4/projects/${projectId}/repository/commits`;
-  return request.post({
+  return axios({
     method: 'POST',
-    uri: url,
+    url,
     headers: {
       'Content-Type': 'application/json',
       'PRIVATE-TOKEN': token
     },
-    body: requestData,
-    json: true
-  });
+    data: requestData,
+    responseType: 'json'
+  }).then(rs => rs.data);
 };
 /**
  * Get options from argument
