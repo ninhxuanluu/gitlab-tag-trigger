@@ -38,8 +38,7 @@ gitlab-tag-trigger -l lib-test-ci -v v1.3.3 -p 5265594,5297794 -t JJWpgybNt3LFKy
 ## Built With
 
 * [nodejs](https://nodejs.org) - NodeJS
-* [request](https://github.com/request/request) - Simplified HTTP request client.
-* [request-promise](https://rometools.github.io/rome/) - Request with Bluebird Promises
+* [axios](https://github.com/axios/axios) - Promise based HTTP client for the browser and node.js.
 
 ## Authors
 
