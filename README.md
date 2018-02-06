@@ -12,6 +12,7 @@ node --version >=v4.8.7
 ```
 npm install -g gitlab-tag-trigger
 ```
+View [gitlab-tag-trigger](https://www.npmjs.com/package/gitlab-tag-trigger) from npm
 
 ## Usage
 
