@@ -22,18 +22,32 @@ Simple node command
 gitlab-tag-trigger [args]
 
 ```
-Command error, use with args:  
+For update package.json, use with args:
 ```
--l [name of library] 
--v [name of tag to update] 
--p [list of project id will be update , separate by comma] 
--t [token from gitlab] 
+-l [name of library]
+-v [name of tag to update]
+-p [list of project id will be update , separate by comma]
+-t [token from gitlab]
 -m [true or false - is auto merge into master]
 ```
 
-Example: 
+Example:
 ```
-gitlab-tag-trigger -l lib-test-ci -v v1.3.3 -p 5265594,5297794 -t JJWpgybNt3LFKyGqy9tT -m true
+gitlab-tag-trigger -l lib-test-ci -v v1.3.3 -p 5265594,5297794 -t 11mHNS3Fzb4rvhy2sKyk -m true
+```
+
+For update file, use with args:
+```
+-i [source file path] 
+-o [destination file path] 
+-o [source project ID] 
+-u [list of project id will be update , separate by comma] 
+-t [token from gitlab] 
+-m [true or false - is auto merge into master]
+```
+Example:
+```
+Example: gitlab-tag-trigger -i lib/test.js -o lib/test.js -s 5265616 -u 5265594 -t 11mHNS3Fzb4rvhy2sKyk  -m true
 ```
 
 ## Built With
