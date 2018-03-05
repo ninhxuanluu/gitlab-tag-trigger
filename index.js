@@ -134,7 +134,8 @@ const getRawFile = (projectId, token, data) => {
       'Content-Type': 'application/json',
       'PRIVATE-TOKEN': token
     },
-    responseType: 'json'
+    responseType: 'text',
+    transformResponse: [txt => txt]
   }).then(rs => rs.data);
 };
 /**
@@ -373,13 +374,12 @@ const updateFile =
             actions: [
               {
                 action: 'update',
-                file_path: encodeURIComponent(updateFilePath),
-                content: JSON.stringify(fileContent),
+                file_path: updateFilePath,
+                content: fileContent,
                 encoding: 'text'
               }
             ]
           };
-          console.log('requestUpdate', (requestUpdate));
           return createNewCommitPackageJson(
             projectIdToUpdate,
             token, requestUpdate
