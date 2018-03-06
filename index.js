@@ -237,7 +237,8 @@ const updatePackageJSON =
     return getRawFile(projectId, token, {
       filename: 'package.json',
       ref: 'master'
-    }).then((packagejson) => {
+    }).then((packagejsonText) => {
+      const packagejson = JSON.parse(packagejsonText);
       const currentVersion = packagejson.dependencies[libraryName];
       if (!packagejson || !currentVersion) {
         return console.log('ProjectID:', projectId, `ERROR: Not found current version of ${libraryName} in package.json on master branch`);
