@@ -36,10 +36,10 @@ const limitPromise = async (arr, limit, proms, ...args) => {
 let i = 0;
 const reportProject = async (projectId, token, from, to) => {
   const projectDetails = await getGitlab(`/projects/${projectId}`, token);
-  console.log(`${i += 1}. ${projectDetails.name}`);
   const issues = await getGitlab(`/projects/${projectId}/issues?created_after=${from}&created_before=${to}`, token);
   if (issues.length > 0) {
     // console.log(`\t No changes.`);
+    console.log(`${i += 1}. ${projectDetails.name}`);
     issues.map((issue, index2) => {
       console.log(`\t${index2 + 1}. ${get(issue, 'title', '')} - ${get(issue.assignees[0], 'name', '')} #${get(issue, 'iid', '')}`);
     });
