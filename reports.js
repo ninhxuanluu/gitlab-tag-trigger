@@ -4,42 +4,6 @@ const moment = require('moment');
 const get = require('lodash').get;
 const minimist = require('minimist');
 
-const ids = [
-  1281929,// verik-iot
-  5004286,// alexa-homeskill
-  4449540,// gaction-smarthome
-  4836986,// customskill
-  1823561,// venus-customskill-intergration
-  4781483,// gaction-customs
-  3686842,// Wowza module
-  3171321,// devices
-  2248416,// venus-devices
-  2285501,// fota-server
-  1711596,// venus-dashboard-user
-  // 0,// Benchmark new mqtt broker
-  6378989,// zino-api
-  6368238,// zinno-website
-  6333313,// messenger-bot
-];
-console.log(ids.join(','));
-/**
- * post gitlab
- * @param path
- * @param token
- * @param data
- * @returns {*}
- */
-const postGitlab = (path, token, data) => axios({
-  method: 'POST',
-  url: `https://gitlab.com/api/v4${path}`,
-  headers: {
-    'Content-Type': 'application/json',
-    'PRIVATE-TOKEN': token
-  },
-  data,
-  responseType: 'json'
-}).then(rs => rs.data).catch(err => console.log('postGitlab err :', err));
-
 /**
  * get gitlab
  * @param path
@@ -74,26 +38,25 @@ const reportProject = async (projectId, token, from, to) => {
   const projectDetails = await getGitlab(`/projects/${projectId}`, token);
   console.log(`${i += 1}. ${projectDetails.name}`);
   const issues = await getGitlab(`/projects/${projectId}/issues?created_after=${from}&created_before=${to}`, token);
-  if (issues.length === 0) {
-    console.log(`\t No changes.`);
+  if (issues.length > 0) {
+    // console.log(`\t No changes.`);
+    issues.map((issue, index2) => {
+      console.log(`\t${index2 + 1}. ${get(issue, 'title', '')} - ${get(issue.assignees[0], 'name', '')} #${get(issue, 'iid', '')}`);
+    });
   }
-  issues.map((issue, index2) => {
-    console.log(`\t${index2 + 1}. ${get(issue, 'title', '')} - ${get(issue.assignees[0], 'name', '')} #${get(issue, 'iid', '')}`);
-  });
   return projectDetails;
 };
 let j = 0;
-
 const reportProjectWithState = async (projectId, token, status, from, to) => {
   const projectDetails = await getGitlab(`/projects/${projectId}`, token);
-  console.log(`${j += 1}. ${projectDetails.name}`);
   const issues = await getGitlab(`/projects/${projectId}/issues?state=${status}&created_after=${from}&created_before=${to}`, token);
-  if (issues.length === 0) {
-    console.log(`\t No changes.`);
+  if (issues.length > 0) {
+    // console.log(`\t No changes.`);
+    console.log(`${j += 1}. ${projectDetails.name}`);
+    issues.map((issue, index2) => {
+      console.log(`\t${index2 + 1}. ${get(issue, 'title', '')} - ${get(issue.assignees[0], 'name', '')} #${get(issue, 'iid', '')}`);
+    });
   }
-  issues.map((issue, index2) => {
-    console.log(`\t${index2 + 1}. ${get(issue, 'title', '')} - ${get(issue.assignees[0], 'name', '')} #${get(issue, 'iid', '')}`);
-  });
   return projectDetails;
 };
 const weeklyReport = async (projectIdList, token, from, to) => {
@@ -138,4 +101,3 @@ const to = moment().utcOffset(0).week(week).weekday(7).set({
 console.log(`GENERATING REPORT START : Week: ${week} from: ${from} to: ${to}`);
 weeklyReport(projectIdList, token, from, to).then(() => console.log('GENERATING REPORT DONE !'))
   .catch(err => console.log('weeklyReport err :', err));
-// node reports.js -w 20 -p 1281929,5004286,4449540,4836986,1823561,4781483,3686842,3171321,2248416,2285501,1711596,6378989,6368238,6333313 -t EMXyKW-KxtAqNG-hJDGS
