@@ -178,6 +178,7 @@ const parseArgs = (args) => {
       console.error(`Gitlab Tag Trigger v${gitlabTagTrigger.version}
     Command error 
     for UPDATE FILE, use with args:
+    -v [name of tag to update]
     -i [source file path]
     -o [destination file path]
     -o [source project ID]
@@ -202,6 +203,7 @@ const parseArgs = (args) => {
     console.error(`Gitlab Tag Trigger v${gitlabTagTrigger.version}
     Command error
     for UPDATE FILE, use with args:
+    -v [name of tag to update]
     -i [source file path]
     -o [destination file path]
     -o [source project ID]
@@ -236,7 +238,7 @@ const updatePackageJSON =
     console.log('ProjectID:', projectId, `0. Start process Update ${libraryName} to ${tagName}`);
     return getRawFile(projectId, token, {
       filename: 'package.json',
-      ref: tagName
+      ref: 'master'
     }).then((packagejsonText) => {
       const packagejson = JSON.parse(packagejsonText);
       const currentVersion = packagejson.dependencies[libraryName];
@@ -339,11 +341,12 @@ const updateFile =
    sourceFilePath,
    updateFilePath,
    token,
+   tagName,
    merge) => {
     console.log('ProjectID:', projectIdToUpdate, `0. Start process Update file : ${updateFilePath}`);
     return getRawFile(projectIdSource, token, {
       filename: encodeURIComponent(sourceFilePath),
-      ref: 'master'
+      ref: tagName
     }).then((fileContent) => {
       if (!fileContent) {
         return console.log('projectIdSource:', projectIdSource, `ERROR: File ${sourceFilePath} doesn't exist on master branch`);
@@ -461,10 +464,11 @@ if (opts.i && opts.i !== '') {
   const updateFilePath = opts.o;
   const projectIdSource = opts.s;
   const projectIdToUpdate = opts.u.toString().split(',');
+  const tagName = opts.v;
   Promise
     .all(
       projectIdToUpdate.map(
-        pId => updateFile(projectIdSource, pId, sourceFilePath, updateFilePath, token, merge)
+        pId => updateFile(projectIdSource, pId, sourceFilePath, updateFilePath, token, tagName, merge)
       )
     )
     .then(() => console.log('Done !'))
