@@ -343,7 +343,7 @@ const updateFile =
    token,
    tagName,
    merge) => {
-    console.log('ProjectID:', projectIdToUpdate, `0. Start process Update file : ${updateFilePath}`);
+    console.log('ProjectID:', projectIdToUpdate, `0. Start process Update file : ${updateFilePath} ${tagName}`);
     return getRawFile(projectIdSource, token, {
       filename: encodeURIComponent(sourceFilePath),
       ref: tagName
