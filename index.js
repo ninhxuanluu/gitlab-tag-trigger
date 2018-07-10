@@ -464,7 +464,7 @@ if (opts.i && opts.i !== '') {
   const updateFilePath = opts.o;
   const projectIdSource = opts.s;
   const projectIdToUpdate = opts.u.toString().split(',');
-  const tagName = opts.v;
+  const tagName = opts.v || 'master';
   Promise
     .all(
       projectIdToUpdate.map(
