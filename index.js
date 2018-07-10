@@ -236,7 +236,7 @@ const updatePackageJSON =
     console.log('ProjectID:', projectId, `0. Start process Update ${libraryName} to ${tagName}`);
     return getRawFile(projectId, token, {
       filename: 'package.json',
-      ref: 'master'
+      ref: tagName
     }).then((packagejsonText) => {
       const packagejson = JSON.parse(packagejsonText);
       const currentVersion = packagejson.dependencies[libraryName];
@@ -275,7 +275,7 @@ const updatePackageJSON =
                 {
                   action: 'update',
                   file_path: 'package.json',
-                  content: JSON.stringify(packagejson, null, 2),
+                  content: JSON.stringify(packagejson, null, 2) + '\n',
                   encoding: 'text'
                 }
               ]
