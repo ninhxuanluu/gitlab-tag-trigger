@@ -352,7 +352,7 @@ const updateFile =
         return console.log('projectIdSource:', projectIdSource, `ERROR: File ${sourceFilePath} doesn't exist on master branch`);
       }
       const issueData = {
-        title: `update filename ${updateFilePath}`,
+        title: `update filename ${updateFilePath} to ${tagName}`,
         description: `update filename ${updateFilePath} automation by ci`,
       };
       return createNewIssue(projectIdToUpdate, token, issueData).then((issueObject) => {
