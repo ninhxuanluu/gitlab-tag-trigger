@@ -185,7 +185,8 @@ const parseArgs = (args) => {
     -u [list of project id will be update , separate by comma]
     -t [token from gitlab]
     -m [true or false - is auto merge into master]
-    Example: gitlab-tag-trigger -i lib/test.js -o lib/test.js -s 5265616 -u 5265594 -t 11mHNS3Fzb4rvhy2sKyk  -m true
+    -a [assignee_id - user assigne for merge request]
+    Example: gitlab-tag-trigger -i lib/test.js -o lib/test.js -s 5265616 -u 5265594 -t 11mHNS3Fzb4rvhy2sKyk  -m true -a 198381
 
     for UPDATE package.json, use with args:  
     -l [name of library] 
@@ -193,7 +194,8 @@ const parseArgs = (args) => {
     -p [list of project id will be update , separate by comma] 
     -t [token from gitlab] 
     -m [true or false - is auto merge into master]
-    Example: gitlab-tag-trigger -l lib-test-ci -v v1.3.3 -p 5265594,5297794 -t 11mHNS3Fzb4rvhy2sKyk -m true
+    -a [assignee_id - user assigne for merge request]
+    Example: gitlab-tag-trigger -l lib-test-ci -v v1.3.3 -p 5265594,5297794 -t 11mHNS3Fzb4rvhy2sKyk -m true -a 198381
 `);
       process.exit(1);
     }
@@ -210,7 +212,8 @@ const parseArgs = (args) => {
     -u [list of project id will be update , separate by comma]
     -t [token from gitlab]
     -m [true or false - is auto merge into master]
-    Example: gitlab-tag-trigger -i lib/test.js -o lib/test.js -s 5265616 -u 5265594 -t 11mHNS3Fzb4rvhy2sKyk  -m true
+    -a [assignee_id - user assigne for merge request]
+    Example: gitlab-tag-trigger -i lib/test.js -o lib/test.js -s 5265616 -u 5265594 -t 11mHNS3Fzb4rvhy2sKyk  -m true -a 198381
 
     for UPDATE package.json, use with args:  
     -l [name of library] 
@@ -218,7 +221,8 @@ const parseArgs = (args) => {
     -p [list of project id will be update , separate by comma] 
     -t [token from gitlab] 
     -m [true or false - is auto merge into master]
-    Example: gitlab-tag-trigger -l lib-test-ci -v v1.3.3 -p 5265594,5297794 -t 11mHNS3Fzb4rvhy2sKyk -m true
+    -a [assignee_id - user assigne for merge request]
+    Example: gitlab-tag-trigger -l lib-test-ci -v v1.3.3 -p 5265594,5297794 -t 11mHNS3Fzb4rvhy2sKyk -m true -a 198381
 `);
     process.exit(1);
   }
@@ -234,7 +238,8 @@ const updatePackageJSON =
    token,
    libraryName,
    tagName,
-   merge) => {
+   merge,
+   assigneeId) => {
     console.log('ProjectID:', projectId, `0. Start process Update ${libraryName} to ${tagName}`);
     return getRawFile(projectId, token, {
       filename: 'package.json',
@@ -294,7 +299,7 @@ const updatePackageJSON =
                 source_branch: branchName,
                 target_branch: 'master',
                 title: `Resolve ${issueData.title}`,
-                assignee_id: 0,
+                assignee_id: assigneeId,
                 milestone_id: null,
                 labels: '',
                 description: `Closes #${issueIID}`,
@@ -342,7 +347,7 @@ const updateFile =
    updateFilePath,
    token,
    tagName,
-   merge) => {
+   merge, assigneeId) => {
     console.log('ProjectID:', projectIdToUpdate, `0. Start process Update file : ${updateFilePath} ${tagName}`);
     return getRawFile(projectIdSource, token, {
       filename: encodeURIComponent(sourceFilePath),
@@ -399,7 +404,7 @@ const updateFile =
                 source_branch: branchName,
                 target_branch: 'master',
                 title: `Resolve ${issueData.title}`,
-                assignee_id: 0,
+                assignee_id: assigneeId,
                 milestone_id: null,
                 labels: '',
                 description: `Closes #${issueIID}`,
@@ -458,6 +463,7 @@ const updateFile =
 const opts = parseArgs(process.argv.slice(2));
 const token = opts.t;
 const merge = opts.m;
+const assigneeId = opts.a;
 
 if (opts.i && opts.i !== '') {
   const sourceFilePath = opts.i;
@@ -483,7 +489,8 @@ if (opts.i && opts.i !== '') {
       token,
       libraryName,
       tagName,
-      merge
+      merge,
+      assigneeId
     )))
     .then(() => console.log('Done !'))
     .catch(err => console.log('ERROR: ', err));
