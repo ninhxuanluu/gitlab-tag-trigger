@@ -29,11 +29,12 @@ For update package.json, use with args:
 -p [list of project id will be update , separate by comma]
 -t [token from gitlab]
 -m [true or false - is auto merge into master]
+-a [assignee_id - user assigne for merge request]
 ```
 
 Example:
 ```
-gitlab-tag-trigger -l lib-test-ci -v v1.3.3 -p 5265594,5297794 -t 11mHNS3Fzb4rvhy2sKyk -m true
+gitlab-tag-trigger -l lib-test-ci -v v1.3.3 -p 5265594,5297794 -t 11mHNS3Fzb4rvhy2sKyk -m true -a 192301
 ```
 
 For update file, use with args:
@@ -44,10 +45,11 @@ For update file, use with args:
 -u [list of project id will be update , separate by comma] 
 -t [token from gitlab] 
 -m [true or false - is auto merge into master]
+-a [assignee_id - user assigne for merge request]
 ```
 Example:
 ```
-Example: gitlab-tag-trigger -i lib/test.js -o lib/test.js -s 5265616 -u 5265594 -t 11mHNS3Fzb4rvhy2sKyk  -m true
+Example: gitlab-tag-trigger -i lib/test.js -o lib/test.js -s 5265616 -u 5265594 -t 11mHNS3Fzb4rvhy2sKyk  -m true -a 192301
 ```
 
 ## Built With
