@@ -474,7 +474,7 @@ if (opts.i && opts.i !== '') {
   Promise
     .all(
       projectIdToUpdate.map(
-        pId => updateFile(projectIdSource, pId, sourceFilePath, updateFilePath, token, tagName, merge)
+        pId => updateFile(projectIdSource, pId, sourceFilePath, updateFilePath, token, tagName, merge, assigneeId)
       )
     )
     .then(() => console.log('Done !'))
