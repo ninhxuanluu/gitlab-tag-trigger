@@ -30,7 +30,7 @@
     "index.js"
   ],
   "dependencies": {
-    "axios": "^0.17.1",
+    "axios": "^0.18.1",
     "lodash": "^4.17.10",
     "minimist": "^1.2.0",
     "moment": "^2.22.1"
