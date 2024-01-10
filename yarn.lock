@@ -10,8 +10,8 @@ axios@^0.17.1:
     is-buffer "^1.1.5"
 
 follow-redirects@^1.2.5:
-  version "1.15.2"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.2.tgz#b460864144ba63f2681096f274c4e57026da2c13"
+  version "1.15.4"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.4.tgz#cdc7d308bf6493126b17ea2191ea0ccf3e535adf"
 
 is-buffer@^1.1.5:
   version "1.1.6"
